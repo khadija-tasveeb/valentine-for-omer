@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>for omer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9aa2, #ffd1dc, #ffffff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'comic sans ms', 'poppins', cursive;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      padding: 35px 25px;
+      border-radius: 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      max-width: 320px;
+      width: 90%;
+    }
+
+    h1 {
+      color: #d6336c;
+      margin-bottom: 10px;
+      font-size: 26px;
+    }
+
+    p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+
+    button {
+      padding: 14px 26px;
+      font-size: 16px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+      margin-right: 12px;
+    }
+
+    #yes:hover {
+      background: #e63950;
+      transform: scale(1.05);
+    }
+
+    #no {
+      background: #f1f1f1;
+      color: #555;
+      position: absolute;
+    }
+
+    .celebration {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle, #ff758f, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      padding: 20px;
+      animation: fadein 1s ease forwards;
+    }
+
+    .celebration h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .celebration p {
+      font-size: 18px;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255,255,255,0.9);
+      animation: float 6s infinite ease-in;
+    }
+
+    @keyframes float {
+      0% { transform: translatey(100vh); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translatey(-10vh); opacity: 0; }
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" id="card">
+    <h1>omer 💌</h1>
+    <p>
+      will you be my valentine?<br>
+      (say yes dumdum 😌)
+    </p>
+
+    <button id="yes">yes 💖</button>
+    <button id="no">no 🙄</button>
+  </div>
+
+  <audio id="music" preload="auto">
+    <source src="love.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const card = document.getElementById("card");
+    const music = document.getElementById("music");
+
+    let audioUnlocked = false;
+
+    // unlock audio on first touch (mobile browsers)
+    document.addEventListener("touchstart", () => {
+      if (!audioUnlocked) {
+        music.play().then(() => {
+          music.pause();
+          music.currentTime = 0;
+          audioUnlocked = true;
+        }).catch(() => {});
+      }
+    }, { once: true });
+
+    noBtn.style.top = "65%";
+    noBtn.style.left = "55%";
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    noBtn.addEventListener("click", () => {
+      alert("oops 😌 error 404\nchoice not found.\nnice try omuimui.");
+    });
+
+    yesBtn.addEventListener("click", () => {
+      music.currentTime = 0;
+      music.play();
+
+      card.remove();
+
+      const celebration = document.createElement("div");
+      celebration.className = "celebration";
+      celebration.innerHTML = `
+        <h2>yayyy 💖</h2>
+        <p>
+          omer is officially khadija’s valentine 💘<br><br>
+          my dumdum 🤍<br>
+          my omuimui 🥹
+        </p>
+      `;
+      document.body.appendChild(celebration);
+
+      for (let i = 0; i < 40; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 28 + 16 + "px";
+        heart.style.animationDelay = Math.random() * 5 + "s";
+        document.body.appendChild(heart);
+      }
+    });
+  </script>
+
+</body>
+</html>
